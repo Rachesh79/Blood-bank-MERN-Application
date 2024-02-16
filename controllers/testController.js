@@ -1,8 +1,8 @@
 const testController = (req,res)=>{
-    res.status(200)
-    res.send({
-        message: "Hello World"
-    });
+    res.status(200).send({
+        message: 'Test Controller',
+        success: true,
+    })
 }
 
 module.exports = testController;

@@ -9,7 +9,7 @@ const PORT = 8080;
 
 
 //routes
-app.use("/api/v1/test", require("./routers/testRouter"));
+app.use("/api/v1/", require("./routers/testRouter"));
 
 
 //listen
