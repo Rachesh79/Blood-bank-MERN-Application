@@ -1,9 +1,8 @@
-const testController = (req,res)=>{
-    res.status(200).send({
-        message: 'Test Controller',
-        success: true,
-    })
+const testController = (req, res) => {
+  res.status(200).json({
+    message: "test router",
+    success: true,
+  });
+};
 
-}
-
-module.exports = testController;
+module.exports = { testController };
