@@ -29,3 +29,4 @@ app.use("/api/v1/", require("./routers/testRouter"));
 app.listen(PORT, () => {
   console.log(`Server is running in ${process.env.DEV_MODE} mode on port ${process.env.PORT}`.bgBlue.white);
 });
+
