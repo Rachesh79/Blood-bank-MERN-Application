@@ -3,6 +3,7 @@ const testController = (req,res)=>{
         message: 'Test Controller',
         success: true,
     })
+
 }
 
 module.exports = testController;
