@@ -133,28 +133,78 @@ const getDonarsController = async (req,res) => {
     }
 }
 
-const getHospitalsController = async (req,res) =>{
+const getHospitalsController = async (req, res) => {
     try {
-        const organization = req.body.userId
-        // get hospital id
-        const hospitalId = await inventoryModel.distinct('hospital', {organization})
-        // Hospital 
+        const organization = req.body.userId;
+        // Fetch hospital records where the user's role is "hospital"
         const hospitals = await userModels.find({
-            _id:{$in:hospitalId}
+            role: "hospital"
+        });
+        console.log("Hospitals:", hospitals); // Log hospitals to inspect the data
+        return res.status(200).send({
+            success: true,
+            message: "Hospitals Data fetched successfully",
+            hospitals
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            success: false,
+            message: 'Error in get Hospital API',
+            error
+        });
+    }
+};
+
+
+const getOrganizationsController = async (req,res) => {
+    try {
+        const donar = req.body.userId
+        const orgId = await inventoryModel.distinct('organization',{donar})
+        // find ORG
+        const organizations = await userModels.find({
+            role:"organization"
         })
         return res.status(200).send({
             success:true,
-            message:"Hospitals Data fetched successfully",
-            hospitals
+            message:"Data fetched successfully",
+            organizations
         })
     } catch (error) {
         console.log(error);
         return res.status(500).send({
             success:false,
-            message:'Error in get Hospital API',
+            message:"Error in Org API",
             error
         })
     }
 }
 
-module.exports = { createInventoryController,  getInventoryController, getDonarsController, getHospitalsController};
+
+// GET hospital Blood records
+
+const getInventoryHospitalController = async (req,res) =>{
+    try {
+        const inventory = await inventoryModel
+        .find(req.body.filters)
+        .populate("donar")
+        .populate("hospital")
+        .populate("organization")
+        .sort({createdAt : -1})
+        return res.status(200).send({
+            success:true,
+            message:"get all hospital consumers records successfull",
+            inventory
+        })
+    } 
+    catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            success:false,
+            error:"Error in get consumer inventory",
+            error
+        })
+    }
+}
+
+module.exports = { createInventoryController,  getInventoryController, getDonarsController, getHospitalsController, getOrganizationsController, getInventoryHospitalController};
