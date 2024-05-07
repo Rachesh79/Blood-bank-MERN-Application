@@ -1,29 +1,52 @@
-const express = require('express')
-const authMiddleware = require('../middlewares/authMiddleware')
-const { createInventoryController, getInventoryController, getDonarsController, getHospitalsController, getOrganizationsController, getInventoryHospitalController } = require('../controllers/inventoryController')
+const express = require("express");
+const authMiddelware = require("../middlewares/authMiddelware");
+const {
+  createInventoryController,
+  getInventoryController,
+  getDonarsController,
+  getHospitalController,
+  getOrgnaisationController,
+  getOrgnaisationForHospitalController,
+  getInventoryHospitalController,
+  getRecentInventoryController,
+} = require("../controllers/inventoryController");
 
-const router = express.Router()
+const router = express.Router();
 
-// routes
-// Add inventory || port
+//routes
+// ADD INVENTORY || POST
+router.post("/create-inventory", authMiddelware, createInventoryController);
 
-router.post('/create-inventory',authMiddleware, createInventoryController)
+//GET ALL BLOOD RECORDS
+router.get("/get-inventory", authMiddelware, getInventoryController);
+//GET RECENT BLOOD RECORDS
+router.get(
+  "/get-recent-inventory",
+  authMiddelware,
+  getRecentInventoryController
+);
 
-// get all blood records
-router.get('/get-inventory',authMiddleware,getInventoryController)
+//GET HOSPITAL BLOOD RECORDS
+router.post(
+  "/get-inventory-hospital",
+  authMiddelware,
+  getInventoryHospitalController
+);
 
-// get hospital blood records
-router.post('/get-inventory-hospital',authMiddleware,getInventoryHospitalController)
+//GET DONAR RECORDS
+router.get("/get-donars", authMiddelware, getDonarsController);
 
-// get donars records
-router.get('/get-donars',authMiddleware, getDonarsController)
+//GET HOSPITAL RECORDS
+router.get("/get-hospitals", authMiddelware, getHospitalController);
 
-// Get hospital records
-router.get('/get-hospitals',authMiddleware, getHospitalsController)
+//GET orgnaisation RECORDS
+router.get("/get-orgnaisation", authMiddelware, getOrgnaisationController);
 
-// Get organization records
-router.get('/get-organizations',authMiddleware, getOrganizationsController)
+//GET orgnaisation RECORDS
+router.get(
+  "/get-orgnaisation-for-hospital",
+  authMiddelware,
+  getOrgnaisationForHospitalController
+);
 
-
-
-module.exports = router
+module.exports = router;
